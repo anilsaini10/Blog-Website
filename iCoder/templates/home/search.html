@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}blog home{% endblock title %}
+{% block blogactive %} active {% endblock blogactive %}
+
+
+{% block body %}
+<h1>Search: </h1>
+
+{% if allPosts|length < 1 %}
+<p>No search found</p>
+{% endif %}
+{% for post in allPosts %}
+
+<div class="container">
+    <strong>Article by {{post.author}}</strong>
+    <h3>{{post.title}}</h3>
+    <p>{{post.content | truncatechars:500}}</p>
+    <a role="button" href="/blog/{{post.slug}}">continue reading</a>
+</div>
+
+{% endfor %}
+{% endblock body %}

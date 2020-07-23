@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}blog{% endblock title %}
+<!-- {% block blogactive %} active {% endblock blogactive %} -->
+
+
+{% block body %}
+{% load humanize %}
+
+<div class="container">
+    <a href="/about">Author by {{post.author}}</a>
+    <h2 class="blog-post-title">{{post.title}}</h2>
+    <p class="blog-post-meta">{{post.content}} by </p>
+</div>
+
+<div class="container">
+    <h3>Comments({{comments.count}})</h3>
+    {% if user.is_authenticated %}
+    post comment here
+
+    <form action="/blog/postComment" method="POST">
+        {% csrf_token %}
+        <input type="text" name="comment" placeholder="comment here">
+        <input type="hidden" name="postSno" value="{{post.sno}}">
+        <input type="hidden" name="parentSno" value="">
+        <input type="submit" value="Submit">
+    </form>
+    {% else %}
+    for comment please login
+    {% endif %}
+    {% for  comment in comments %}
+    <div class="row my-3">
+        <div class="col-md-10">
+            <b>{{comment.user.username}}</b> at <b>{{comment.timestamp | naturaltime}}</b>
+            <div>{{comment.comment}}</div>
+        </div>
+        <!-- <div class="reply mx-0">
+
+            <button class="btn btn-primary mx-0" type="button" data-toggle="collapse" data-target="#replyBox{{comment.sno}}"
+                aria-expanded="false" aria-controls="collapseExample">
+                reply
+            </button>
+       
+        <div class="collapse" id="replyBox{{comment.sno}}">
+            <div class="card card-body">
+                <form action="/blog/postComment" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="comment">Post a reply</label>
+                        <input type="text" class="form-control" name="commment" placeholder="reply here">
+                        <input type="hidden" name="parentSno" value="{{comment.sno}}" >
+                    </div>
+                    <input type="hidden" name="postSno" value="{{post.sno}}">
+                    <button type="submit" class="btn btn-primary">submit</button>
+                </form>
+            </div>
+        </div>
+      </div> -->
+    </div>
+
+    {% endfor %}
+
+
+</div>
+
+{% endblock body %}
