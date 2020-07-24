@@ -23,7 +23,7 @@
     <a href="/blog">continue reading</a>
 </div> -->
 
-<form method="POST", action="/blog/">
+<form method="POST", action="{% url 'home' %}">
     {% csrf_token %}
     <div class="form-group">
       <label for="title">Title</label>

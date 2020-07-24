@@ -16,6 +16,12 @@ def blogPost(request,slug):
     post = Post.objects.filter(slug =slug).first()
     comments = BlogComment.objects.filter(post = post)
     context= {'post': post, 'comments' : comments,  'user': request.user}
+
+    if request.method == "POST":
+        post = Post.objects.get(slug =slug)
+        post.delete()
+        messages.success(request,"post is deleted successfully")
+        # Post.objects.get(post = post).delete()
     return render(request,'blog/blogPost.html',context)
 
 def postComment(request):

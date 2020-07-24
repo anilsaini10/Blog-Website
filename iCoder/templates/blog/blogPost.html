@@ -3,7 +3,6 @@
 {% block title %}blog{% endblock title %}
 <!-- {% block blogactive %} active {% endblock blogactive %} -->
 
-
 {% block body %}
 {% load humanize %}
 
@@ -13,10 +12,15 @@
     <p class="blog-post-meta">{{post.content}} by </p>
 </div>
 
+   <form action="" method="POST">
+       {% csrf_token %}
+       <input class="delete" type="submit" value="delete" name="delete">
+   </form>
+
 <div class="container">
     <h3>Comments({{comments.count}})</h3>
     {% if user.is_authenticated %}
-    post comment here
+      post comment here
 
     <form action="/blog/postComment" method="POST">
         {% csrf_token %}
@@ -25,6 +29,8 @@
         <input type="hidden" name="parentSno" value="">
         <input type="submit" value="Submit">
     </form>
+
+    
     {% else %}
     for comment please login
     {% endif %}
@@ -57,6 +63,7 @@
         </div>
       </div> -->
     </div>
+   
 
     {% endfor %}
 
